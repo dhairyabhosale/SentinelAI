@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>SentinelAI</title>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#0f1a2e;
+      --text:#e7eefc;
+      --muted:#9bb0d1;
+      --border:rgba(255,255,255,0.10);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      width:360px;
+      background:var(--bg);
+      color:var(--text);
+      font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+
+    .app{ padding:12px; }
+
+    .top .brand{
+      display:flex; gap:10px; align-items:center;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      border-radius:14px;
+    }
+
+    .logo{
+      width:34px; height:34px;
+      border-radius:10px;
+      background: linear-gradient(135deg, rgba(0,255,180,0.35), rgba(80,120,255,0.35));
+      border:1px solid var(--border);
+    }
+
+    .title{ font-weight:900; letter-spacing:0.2px; }
+    .subtitle{ color:var(--muted); font-size:12px; margin-top:2px; }
+
+    .panel{
+      margin-top:10px;
+      padding:12px;
+      border-radius:16px;
+      background:var(--card);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+
+    .row{ display:flex; gap:10px; }
+
+    .btn{
+      flex:1;
+      border-radius:12px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.04);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:900;
+    }
+
+    .btn.primary{
+      background:rgba(80,120,255,0.25);
+      border-color:rgba(80,120,255,0.45);
+    }
+
+    .status{ margin-top:10px; color:var(--muted); min-height:18px; }
+    .hidden{ display:none; }
+
+    .result{ margin-top:12px; }
+
+    .verdictRow{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+
+    .pill{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      font-weight:900;
+      font-size:12px;
+    }
+
+    .pill.safe{ background: rgba(0, 255, 150, 0.12); border-color: rgba(0, 255, 150, 0.35); }
+    .pill.warn{ background: rgba(255, 200, 0, 0.12); border-color: rgba(255, 200, 0, 0.35); }
+    .pill.danger{ background: rgba(255, 60, 60, 0.12); border-color: rgba(255, 60, 60, 0.35); }
+
+    .muted{ color:var(--muted); }
+
+    .block{
+      margin-top:10px;
+      padding:10px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:rgba(255,255,255,0.03);
+    }
+
+    .blockTitle{
+      font-weight:900;
+      margin-bottom:6px;
+      font-size:12px;
+    }
+
+    .linkRow{
+      margin-top:10px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding-top:10px;
+      border-top:1px solid var(--border);
+    }
+
+    a, a:visited{
+      color:#a8c7ff;
+      text-decoration:none;
+      font-weight:700;
+      font-size:12px;
+    }
+    a:hover{ text-decoration:underline; }
+  </style>
+</head>
+
+<body>
+<div class="app">
+
+  <header class="top">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <div class="title">SentinelAI</div>
+        <div class="subtitle">Authority & content trust scan</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="panel">
+
+    <div class="row">
+      <button id="btnScan" class="btn primary">Run Deep Scan</button>
+      <button id="btnReset" class="btn">Reset</button>
+    </div>
+
+    <!-- Always visible -->
+    <div class="linkRow">
+      <a id="settingsLink" href="#">Settings</a>
+      <a id="helpLink" href="#">Help</a>
+    </div>
+
+    <section id="result" class="result hidden">
+      <div class="verdictRow">
+        <span id="verdictPill" class="pill">—</span>
+        <span id="confidenceText" class="muted"></span>
+      </div>
+
+      <div class="block">
+        <div class="blockTitle">Scan output</div>
+        <div id="summary">—</div>
+      </div>
+
+      <div class="block">
+        <div class="blockTitle">How to proceed</div>
+        <div id="proceed">—</div>
+      </div>
+    </section>
+
+    <section id="status" class="status"></section>
+
+  </main>
+
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

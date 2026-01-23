@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>SentinelAI Settings</title>
+  <style>
+    body{
+      margin:0;
+      font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:#0b1220;
+      color:#e7eefc;
+    }
+    .wrap{ max-width:780px; margin:0 auto; padding:18px; }
+    .card{
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      border-radius:16px;
+      padding:16px;
+      margin-top:14px;
+    }
+    h1{ margin:0; font-size:18px; }
+    .muted{ color:#9bb0d1; font-size:12px; margin-top:4px; }
+    label{ display:block; margin-top:12px; font-weight:800; }
+    input, textarea{
+      width:100%;
+      margin-top:6px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      color:#e7eefc;
+      outline:none;
+    }
+    textarea{ min-height:92px; resize:vertical; }
+    .row{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+    button{
+      border-radius:12px;
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(80,120,255,0.25);
+      border-color: rgba(80,120,255,0.45);
+      color:#e7eefc;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .ghost{
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.10);
+    }
+    .danger{
+      background: rgba(255,60,60,0.14);
+      border-color: rgba(255,60,60,0.35);
+    }
+    .status{ margin-top:10px; color:#9bb0d1; min-height:18px; }
+    .pill{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.10);
+      font-size:12px;
+      font-weight:900;
+      margin-left:8px;
+    }
+    .ok{ background: rgba(0,255,150,0.12); border-color: rgba(0,255,150,0.35); }
+    .bad{ background: rgba(255,60,60,0.12); border-color: rgba(255,60,60,0.35); }
+    .hidden{ display:none; }
+    .note{
+      margin-top:10px;
+      padding:10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      color:#9bb0d1;
+      font-size:12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>SentinelAI Settings</h1>
+      <div class="muted">Admin-only: protected with a PIN. Your API key is stored in chrome.storage (not in code).</div>
+      <div class="note">
+        Security note: This PIN gate protects Settings from casual access. Anyone with access to your Windows account + Chrome profile could still potentially modify extension storage.
+      </div>
+    </div>
+
+    <div class="card" id="pinCard">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+        <div style="font-weight:900;">Admin Lock</div>
+        <div>
+          <span class="pill" id="lockState">Locked</span>
+        </div>
+      </div>
+
+      <div id="firstTime" class="hidden">
+        <label>Create Admin PIN (min 4 digits)</label>
+        <input id="newPin" type="password" inputmode="numeric" placeholder="••••" autocomplete="off" />
+        <label>Confirm PIN</label>
+        <input id="newPin2" type="password" inputmode="numeric" placeholder="••••" autocomplete="off" />
+        <div class="row">
+          <button id="setPinBtn">Set PIN</button>
+        </div>
+      </div>
+
+      <div id="unlockSection" class="hidden">
+        <label>Enter Admin PIN to unlock</label>
+        <input id="pin" type="password" inputmode="numeric" placeholder="••••" autocomplete="off" />
+        <div class="row">
+          <button id="unlockBtn">Unlock</button>
+          <button id="lockBtn" class="ghost">Lock</button>
+        </div>
+      </div>
+
+      <div id="status" class="status"></div>
+    </div>
+
+    <div class="card" id="settingsCard">
+      <label>OpenRouter API Key <span id="keyState" class="pill bad">Hidden</span></label>
+      <input id="apiKey" type="password" placeholder="sk-or-..." autocomplete="off" disabled />
+
+      <label style="margin-top:14px;">Primary model</label>
+      <input id="primaryModel" type="text" placeholder="mistralai/mistral-7b-instruct" disabled />
+
+      <label>Fallback models (one per line)</label>
+      <textarea id="fallbackModels" placeholder="meta-llama/llama-3.1-8b-instruct&#10;qwen/qwen-2.5-7b-instruct" disabled></textarea>
+
+      <div class="row">
+        <button id="saveBtn" disabled>Save</button>
+        <button id="clearBtn" class="ghost danger" disabled>Clear key</button>
+        <button id="testBtn" class="ghost" disabled>Test connection</button>
+      </div>
+
+      <div id="sstatus" class="status"></div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
